@@ -1,40 +1,50 @@
-// Keyboard and Input Events
+// Event Bubbling
 
-const form = document.querySelector('form');
-const taskInput = document.getElementById('task');
-const heading = document.querySelector('h5');
-const select = document.querySelector('select');
+// document.querySelector('.card-title').addEventListener('click', function () {
+//   console.log('you just clicked the element with a class of card title');
 
-// form.addEventListener('submit', runEvent);
+// prevent event bubbling with this method
+// event.stopPropagation();
+// });
 
-// Keydown
-// taskInput.addEventListener('keydown', runEvent)
-// Keyup
-// taskInput.addEventListener('keyup', runEvent)
-// Keypress
-// taskInput.addEventListener('keypress', runEvent)
-// Focus
-// taskInput.addEventListener('focus', runEvent)
-// Blur
-// taskInput.addEventListener('blur', runEvent)
-// Cut
-// taskInput.addEventListener('cut', runEvent)
-// Paste
-// taskInput.addEventListener('paste', runEvent)
-// taskInput.addEventListener('input', runEvent);
-// Change
-select.addEventListener('change', runEvent);
+// document.querySelector('.card-content').addEventListener('click', function () {
+//   console.log('content');
+// });
 
-function runEvent(e) {
-  // e.preventDefault();
-  // Log event type
-  console.log(`Event Type: ${e.type}`);
-  // Get input value
-  console.log(e.target.value);
-  // console.log(taskInput.value);
+// document.querySelector('.card').addEventListener('click', function () {
+//   console.log('card');
+// });
+// document.querySelector('.col').addEventListener('click', function () {
+//   console.log('col');
+// });
 
-  // heading.innerText = e.target.value;
-}
+// Event Delegation
 
-// Clear input
-taskInput.value = '';
+// const deleteItem = document.querySelector('.delete-item');
+
+
+// deleteItem.addEventListener('click', function () {
+//   console.log('deleted item');
+// })
+
+document.body.addEventListener('click', function (e) {
+  if (e.target.className === 'fa fa-remove') {
+    console.log('deleted item', e.target);
+  }
+});
+
+// Very handy for viewing the class being targeted by the event
+// console.log(e.target);
+
+document.body.addEventListener('click', function (e) {
+  // Using className will not work if more classes are added to any element targeted after the fact
+  // if (e.target.parentElement.className === 'delete-item secondary-content') {
+  //   console.log('Gotcha Sucker', e.target);
+  // }
+  // Use classList.contains, checks for ANY class listed to fire, can add more classes without issues
+  if (e.target.parentElement.classList.contains('secondary-content')) {
+    console.log('Gotcha Sucker', e.target);
+    //go up 2 elements to delete the list item <i> -> <a> -> <li>--delete
+    e.target.parentElement.parentElement.remove();
+  }
+});
