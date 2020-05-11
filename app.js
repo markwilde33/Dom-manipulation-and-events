@@ -1,50 +1,47 @@
-// Event Bubbling
+// // set local storage item
+localStorage.setItem('intent', 'git gud');
+localStorage.setItem('reason', 'freedom');
+// localStorage.setItem('task', '');
 
-// document.querySelector('.card-title').addEventListener('click', function () {
-//   console.log('you just clicked the element with a class of card title');
+// // set session storage item
+// sessionStorage.setItem('intent', 'git right gud');
 
-// prevent event bubbling with this method
-// event.stopPropagation();
-// });
+// remove from storage
+// localStorage.removeItem('intent');
 
-// document.querySelector('.card-content').addEventListener('click', function () {
-//   console.log('content');
-// });
+// get from storage
+const intent = localStorage.getItem('intent');
+const reason = localStorage.getItem('reason');
 
-// document.querySelector('.card').addEventListener('click', function () {
-//   console.log('card');
-// });
-// document.querySelector('.col').addEventListener('click', function () {
-//   console.log('col');
-// });
+// clear local storage
+// localStorage.clear();
 
-// Event Delegation
-
-// const deleteItem = document.querySelector('.delete-item');
+console.log(`${intent} gain ${reason}`);
 
 
-// deleteItem.addEventListener('click', function () {
-//   console.log('deleted item');
-// })
+document.querySelector('form').addEventListener('submit',
+  function (e) {
+    const task = document.getElementById('task').value;
 
-document.body.addEventListener('click', function (e) {
-  if (e.target.className === 'fa fa-remove') {
-    console.log('deleted item', e.target);
-  }
-});
+    let tasks;
 
-// Very handy for viewing the class being targeted by the event
-// console.log(e.target);
+    if (localStorage.getItem('taskItems') === null) {
+      tasks = [];
+    } else {
+      tasks = JSON.parse(localStorage.getItem('taskItems'));
+    }
 
-document.body.addEventListener('click', function (e) {
-  // Using className will not work if more classes are added to any element targeted after the fact
-  // if (e.target.parentElement.className === 'delete-item secondary-content') {
-  //   console.log('Gotcha Sucker', e.target);
-  // }
-  // Use classList.contains, checks for ANY class listed to fire, can add more classes without issues
-  if (e.target.parentElement.classList.contains('secondary-content')) {
-    console.log('Gotcha Sucker', e.target);
-    //go up 2 elements to delete the list item <i> -> <a> -> <li>--delete
-    e.target.parentElement.parentElement.remove();
-  }
+    tasks.push(task);
+
+    localStorage.setItem('taskItems', JSON.stringify(tasks));
+    alert('Got dat sucker')
+
+    console.log(tasks);
+    e.preventDefault();
+  });
+
+const tasks = JSON.parse(localStorage.getItem('taskItems'));
+
+tasks.forEach(function (task) {
+  console.log(task);
 });
